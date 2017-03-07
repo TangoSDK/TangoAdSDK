@@ -1,0 +1,6 @@
+framework module TangoAdSDK {
+  umbrella header "TangoAdSDK.h"
+
+  export *
+  module * { export * }
+}
