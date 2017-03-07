@@ -29,12 +29,12 @@ A native ad include the following creatives:
 
 ### Loading native ads
 
-1. Create an instance of TGNativeAd and initialize it with an ad unit id. 
+Step 1. Create an instance of TGNativeAd and initialize it with an ad unit id. 
 ```
   TGNativeAd * nativeAd = [[TGNativeAd alloc] initWithAdUnitId:@"carousel_feed_placeholder"];
 ```
 
-2. Implement TGNativeAdDelegate to handle events from TGNativeAd. All methods are optional. 
+Step 2. Implement TGNativeAdDelegate to handle events from TGNativeAd. All methods are optional. 
 ```
 - (void)nativeAdDidLoad:(TGNativeAd *)nativeAd {
   // This will be called when a native ad is loaded successfully. 
@@ -46,17 +46,17 @@ A native ad include the following creatives:
 
 ```
 
-3. Set the delegate. 
+Step 3. Set the delegate. 
 ```
 nativeAd.delegate = self; 
 ```
 
-4. Load an ad from server. 
+Step 4. Load an ad from server. 
 ```
 [nativeAd loadAd]
 ```
 
-5. When a native ad is loaded successfully, load the icon and the main image. 
+Step 5. When a native ad is loaded successfully, load the icon and the main image. 
 ```
   [nativeAd.image loadImageAsyncWithBlock:^(UIImage * _Nullable image) {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -70,14 +70,22 @@ nativeAd.delegate = self;
   }];
 ```
 
-6. Register view for interaction
+Step 6. Register view for interaction
 ```
   [nativeAd registerViewForInteraction:adcell.contentView withViewController:self];
 ```
 
-7. Render the creatives of the native ad
+Step 7. Render the creatives of the native ad
+```
+nativeAd.title
+nativeAd.subtitle
+nativeAd.ctaText
+nativeAd.icon
+nativeAd.image
+nativeAd.star_rating
+```
 
-8. When the ad display is finished, unregister the view 
+Step 8. When the ad display is finished, unregister the view 
 ```
   [nativeAd unregisterView];
 ```
