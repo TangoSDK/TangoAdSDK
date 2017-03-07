@@ -94,7 +94,7 @@ Step 8. When the ad display is finished, unregister the view
 
 Besides nativeAdDidLoad and didFailWithError, the app will be notified when the following events taken place in TGNativeAd if corresponding methods in TGNativeAdDelegate are implemented.
 
-1. nativeAdWillLogImpression: the event of a TGNativeAd failing to load
+1. nativeAdWillLogImpression: the event of a TGNativeAd impression being logged
 
 2. nativeAdDidClick: the event of a TGNativeAd being clicked
 
