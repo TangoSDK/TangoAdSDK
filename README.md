@@ -1,5 +1,12 @@
 # TangoAdSDK-iOS
 
+## Table of Contents
+* [Prerequisites](##Prerequisites)
+* [Installation](#Installation)
+* [Native Ads](#Native-Ads)
+* [Ad Events](#Ad-Events)
+* [Sample App](#Sample-App)
+
 ## Prerequisites
 
 ### Ad unit id 
@@ -7,6 +14,8 @@
 Ad unit id is a string that identify particular ad unit. Please use 'carousel_feed_placeholder' in testing app and contact [ads@tango.me](ads@tango.me) for the real ad unit id in production app. 
 
 ## Installation
+
+Please refer to [Tango Native Ad Sample](https://github.com/TangoSDK/TangoAdSDK-iOS/tree/master/TangoNativeAdSample) 
 
 ## Native Ads
 
@@ -30,12 +39,12 @@ A native ad include the following creatives:
 ### Loading native ads
 
 Step 1. Create an instance of TGNativeAd and initialize it with an ad unit id. 
-```
+```objectivec
   TGNativeAd * nativeAd = [[TGNativeAd alloc] initWithAdUnitId:@"carousel_feed_placeholder"];
 ```
 
 Step 2. Implement TGNativeAdDelegate to handle events from TGNativeAd. All methods are optional. 
-```
+```objectivec
 - (void)nativeAdDidLoad:(TGNativeAd *)nativeAd {
   // This will be called when a native ad is loaded successfully. 
 }
@@ -47,17 +56,17 @@ Step 2. Implement TGNativeAdDelegate to handle events from TGNativeAd. All metho
 ```
 
 Step 3. Set the delegate. 
-```
+```objectivec
 nativeAd.delegate = self; 
 ```
 
 Step 4. Load an ad from server. 
-```
+```objectivec
 [nativeAd loadAd]
 ```
 
 Step 5. When a native ad is loaded successfully, load the icon and the main image. 
-```
+```objectivec
   [nativeAd.image loadImageAsyncWithBlock:^(UIImage * _Nullable image) {
     dispatch_async(dispatch_get_main_queue(), ^{
       // save the main image 
@@ -71,12 +80,12 @@ Step 5. When a native ad is loaded successfully, load the icon and the main imag
 ```
 
 Step 6. Register view for interaction
-```
-  [nativeAd registerViewForInteraction:adcell.contentView withViewController:self];
+```objectivec
+  [nativeAd registerViewForInteraction:contentView withViewController:self];
 ```
 
-Step 7. Render the creatives of the native ad
-```
+Step 7. Render the creatives of the native ad with the registered `contentView`. 
+```objectivec
 nativeAd.title
 nativeAd.subtitle
 nativeAd.ctaText
@@ -86,7 +95,7 @@ nativeAd.star_rating
 ```
 
 Step 8. When the ad display is finished, unregister the view 
-```
+```objectivec
   [nativeAd unregisterView];
 ```
 
@@ -101,7 +110,7 @@ Besides nativeAdDidLoad and didFailWithError, the app will be notified when the 
 3. nativeAdDidFinishHandlingClick: the event of a TGNativeAd finishing the click activity
 
 
-## Sample app
+## Sample App
 
 * [Tango Native Ad Sample](https://github.com/TangoSDK/TangoAdSDK-iOS/tree/master/TangoNativeAdSample)
 
