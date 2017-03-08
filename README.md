@@ -1,11 +1,11 @@
 # TangoAdSDK-iOS
 
 ## Table of Contents
-* [Prerequisites](##Prerequisites)
-* [Installation](#Installation)
-* [Native Ads](#Native-Ads)
-* [Ad Events](#Ad-Events)
-* [Sample App](#Sample-App)
+* [Prerequisites](##prerequisites)
+* [Installation](#installation)
+* [Native Ads](#native-ads)
+* [Ad Events](#ad-events)
+* [Sample App](#sample-app)
 
 ## Prerequisites
 
