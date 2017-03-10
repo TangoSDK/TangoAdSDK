@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, TGNativeAdError) {
   TGNativeAdErrorEmptyAdData,
 };
 
+
 @protocol TGNativeAdDelegate;
 @class TGAdImage;
 

@@ -13,6 +13,7 @@
 
 #import <UIKit/UIKit.h>
 #import <TangoAdSDK/TGAdMacros.h>
+#import <TangoAdSDK/TGNativeAdSDK.h>
 #import <TangoAdSDK/TGNativeAd.h>
 
 

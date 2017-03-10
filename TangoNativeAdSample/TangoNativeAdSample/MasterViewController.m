@@ -3,17 +3,19 @@
 //  TangoNativeAdSample
 //
 //  Created by idogadaev on 28/02/17.
-//  Copyright © 2017 Tango.me. All rights reserved.
+//  Copyright © 2017 com.sgiggle.tango3dev. All rights reserved.
 //
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
 #import "TGAdCell.h"
+#import <CoreLocation/CoreLocation.h>
 #import <TangoAdSDK/TangoAdSDK.h>
 
 @interface MasterViewController ()<AdCellAdLoadInformationProtocol>
 @property (nonatomic, strong) NSMutableSet * failedAdIndexes;
 @property (nonatomic, strong) NSMutableArray * adsCache;
+@property (nonatomic, strong) CLLocationManager * manager;
 @end
 
 @implementation MasterViewController
@@ -42,6 +44,8 @@
   self.failedAdIndexes = [NSMutableSet set];
   self.adsCache = [NSMutableArray array];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+  self.manager = [[CLLocationManager alloc] init];
+  [self.manager  requestWhenInUseAuthorization];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {

@@ -3,11 +3,12 @@
 //  TangoNativeAdSample
 //
 //  Created by idogadaev on 28/02/17.
-//  Copyright © 2017 Tango.me. All rights reserved.
+//  Copyright © 2017 com.sgiggle.tango3dev. All rights reserved.
 //
 
 #import "AppDelegate.h"
 #import "DetailViewController.h"
+#import <TangoAdSDK/TangoAdSDK.h>
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
@@ -22,6 +23,9 @@
   UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
   navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
   splitViewController.delegate = self;
+  [[TGNativeAdSDK sharedInstance] initializeSDK];//first call to the SDK, must be called on main thread
+  [TGNativeAdSDK sharedInstance].userAge = 21;//optinal
+  [TGNativeAdSDK sharedInstance].userGender = TGNativeAdSDKUserGenderFemale;//optional, defaults to TGNativeAdSDKUserGenderUnknown
   return YES;
 }
 
