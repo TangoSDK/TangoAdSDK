@@ -34,6 +34,8 @@ typedef NS_ENUM(NSInteger, TGNativeAdSDKUserGender) {
 @property (nonatomic,assign) NSUInteger userAge;
 @property (nonatomic,assign) TGNativeAdSDKUserGender userGender;
 - (void)initializeSDK; //must be called on main thread
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation;
+
 @end
 
 

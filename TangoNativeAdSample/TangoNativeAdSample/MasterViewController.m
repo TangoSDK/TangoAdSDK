@@ -108,6 +108,7 @@
       }
     }
     [adcell.nativeAd unregisterView];
+    adcell.nativeAd = nil;
   }
 }
 
