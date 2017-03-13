@@ -37,13 +37,42 @@ A native ad include the following creatives:
 
 
 ### Loading native ads
+Step 1. Add "tangosdk" scheme to Info.plist file
 
-Step 1. Create an instance of TGNativeAd and initialize it with an ad unit id. 
+Step 2. Initialize SDK in didFinishLaunchingWithOptions:
+```objectivec
+  [[TGNativeAdSDK sharedInstance] initializeSDK];//first call to the SDK, must be called on main thread
+  [TGNativeAdSDK sharedInstance].userAge = 21;//optinal
+  [TGNativeAdSDK sharedInstance].userGender = TGNativeAdSDKUserGenderFemale;//optional, defaults to TGNativeAdSDKUserGenderUnknown
+```
+
+Step 3. Forward openURL: calls to application:openURL:sourceApplication:annotation: method of TGNativeAdSDK:
+```objectivec
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  BOOL rc = [[TGNativeAdSDK sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+  if (rc) {
+    return rc;
+  }
+  //continue...
+  return YES;
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+  BOOL rc = [[TGNativeAdSDK sharedInstance] application:app openURL:url sourceApplication:nil annotation:[NSNull null]];
+  if (rc) {
+    return rc;
+  }
+  //continue...
+  return YES;
+}
+```
+
+Step 4. Create an instance of TGNativeAd and initialize it with an ad unit id. 
 ```objectivec
   TGNativeAd * nativeAd = [[TGNativeAd alloc] initWithAdUnitId:@"carousel_feed_placeholder"];
 ```
 
-Step 2. Implement TGNativeAdDelegate to handle events from TGNativeAd. All methods are optional. 
+Step 5. Implement TGNativeAdDelegate to handle events from TGNativeAd. All methods are optional. 
 ```objectivec
 - (void)nativeAdDidLoad:(TGNativeAd *)nativeAd {
   // This will be called when a native ad is loaded successfully. 
