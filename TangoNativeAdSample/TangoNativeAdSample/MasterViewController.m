@@ -8,6 +8,7 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "AppDelegate.h"
 #import "TGAdCell.h"
 #import <CoreLocation/CoreLocation.h>
 #import <TangoAdSDK/TangoAdSDK.h>
@@ -99,10 +100,15 @@
   }
 }
 
+- (BOOL)cacheAds {
+  AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+  return delegate.cacheAds;
+}
+
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(nonnull UITableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
   if ((indexPath.row%3) == 0) {
     TGAdCell *adcell = (TGAdCell *)cell;
-    if (adcell.nativeAd != nil && adcell.adWasLoaded) {
+    if ([self cacheAds] && adcell.nativeAd != nil && adcell.adWasLoaded) {
       if (![self.adsCache containsObject:adcell.nativeAd]) {
         [self.adsCache addObject:adcell.nativeAd];
       }
@@ -117,7 +123,7 @@
   if ((indexPath.row%3) == 0) {
     BOOL adFromCache = NO;
     TGNativeAd * ad =  nil;
-    if (self.adsCache.count > 0) {
+    if ([self cacheAds] && self.adsCache.count > 0) {
       ad = self.adsCache.firstObject;
       [self.adsCache removeObject:ad];
       adFromCache = YES;
@@ -131,6 +137,7 @@
     if (!adFromCache) {
       NSString * text = @"Loading...";
       adcell.title.text = text;
+      adcell.subtitle.text = @"";
     }
     cell = adcell;
   }
@@ -155,7 +162,9 @@
 - (void)nativeAd:(TGNativeAd *)nativeAd failedToLoadForCell:(TGAdCell *)cell {
   NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
   if (indexPath != nil) {
-    [self.adsCache removeObject:nativeAd];
+    if ([self cacheAds]) {
+      [self.adsCache removeObject:nativeAd];
+    }
     [self.failedAdIndexes addObject:@(indexPath.row)];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
   }

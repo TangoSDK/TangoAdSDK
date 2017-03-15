@@ -84,6 +84,8 @@
 - (void)nativeAd:(TGNativeAd *)nativeAd didFailWithError:(NSError *)error {
   dispatch_async(dispatch_get_main_queue(), ^{
     self.title.text = @"Ad was not loaded";
+    self.image.image = nil;
+    self.icon.image = nil;
     self.subtitle.text = error.description;
     if (self.adLoadDelegate != nil) {
       [self.adLoadDelegate nativeAd:nativeAd failedToLoadForCell:self];

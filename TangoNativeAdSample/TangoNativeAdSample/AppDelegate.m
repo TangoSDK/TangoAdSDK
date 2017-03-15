@@ -23,13 +23,29 @@
   UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
   navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
   splitViewController.delegate = self;
+  self.cacheAds = YES;
   [[TGNativeAdSDK sharedInstance] initializeSDK];//first call to the SDK, must be called on main thread
   [TGNativeAdSDK sharedInstance].userAge = 21;//optinal
   [TGNativeAdSDK sharedInstance].userGender = TGNativeAdSDKUserGenderFemale;//optional, defaults to TGNativeAdSDKUserGenderUnknown
   return YES;
 }
 
+- (BOOL)checkIfAdCacheUrl:(NSURL *)url {
+  if ([url.scheme isEqualToString:@"tangoadsdk"] && [url.host isEqualToString:@"adcache"]) {
+    if ([url.query isEqualToString:@"enabled=no"]) {
+      self.cacheAds = NO;
+    }
+    else if ([url.query isEqualToString:@"enabled=yes"]) {
+      self.cacheAds = YES;
+    }
+    return YES;
+  }
+  return NO;
+}
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  if ([self checkIfAdCacheUrl:url]) {
+    return YES;
+  }
   BOOL rc = [[TGNativeAdSDK sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
   if (rc) {
     return rc;
@@ -39,6 +55,9 @@
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+  if ([self checkIfAdCacheUrl:url]) {
+    return YES;
+  }
   BOOL rc = [[TGNativeAdSDK sharedInstance] application:app openURL:url sourceApplication:nil annotation:[NSNull null]];
   if (rc) {
     return rc;
